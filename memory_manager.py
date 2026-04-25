@@ -18,3 +18,10 @@ def save_to_memory(user_text, agent_response):
 
     with open(MEMORY_FILE, 'w') as f:
         json.dump(data, f, indent=4)
+
+def get_recent_memory(n=3):
+    """Retrieve last N memory events."""
+    with open(MEMORY_FILE, 'r') as f:
+        data = json.load(f)
+
+    return data["history"][-n:]
