@@ -1,3 +1,5 @@
+from itertools import chain
+
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -8,27 +10,32 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 
 model = genai.GenerativeModel("gemini-2.5-flash", api_key=API_KEY)
 
-def chain(prompt):
+def ai_agent_with_memory(user_input):
+    #load last 3 interactions
+    past_memory = get_recent_memory(3)
 
-    #step 1: ask agent to brake doen the task
-    step_1 = model.generate_content(
-        f"Break this task into clear steps: \n{prompt}"
-    ).text
-    print("\nStep 1  Breakdown:\n - agent_with_memory.py:17", step_1)
+    memory_text = ""
+    for item in past_memory:
+        memory_text += f"User: {item['user']}\nAgent: {item['agent']}\n\n"
     
-    #step 2: ask agent to complete the reasoning
-    step_2 = model.generate_content(
-        f"Based on the steps, give the detailed explanation: \nSteps: {step_1}\nTask: {prompt}"
-    ).text
-    print("\n[Explanation] - agent_with_memory.py:23", step_2)
+    # Build final prompt
+    final_prompt = f"""
+You are an AI assistant with memory. 
+Here is your past memory:
+    
+   
+{memory_text}
 
-    #step 3 Ask agent for final summary
-    step_3 = model.generate_content(
-        f"Summarize the final answer in simple words: \nExplanation: {step_2}\nTask: {propmt}"
-    ).text
-    print("\n[Summary] - agent_with_memory.py:29", step_3)
+Now answer the new user message:
 
-    return step_3
+{user_input}
+    """
 
-if __name__ == "__main__":
-    chain("Explain Python decorators with an example.")
+    # Generate the response
+    response = model.generate_content(final_prompt)
+    answer = response.text
+
+    # Save both user query + AI answer
+    save_to_memory(user_input, answer)
+
+    return answer
