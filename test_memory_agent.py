@@ -7,4 +7,4 @@ while True:
     if user_msg.lower() == "exit":
         break
     reply = ai_agent_with_memory(user_msg)
-    print(f"Agent: {reply} - test_memory_agent.py:10")
+    print("Agent: - test_memory_agent.py:10", reply)
