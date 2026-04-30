@@ -43,15 +43,15 @@ class InterviewRouter:
         )
 
         return {
-            "type": "analysis",
-            "score": feedback["score"],
-            "brief_feedback": feedback["brief_feedback"],
-            "improvement_tips": feedback["improvement"],
-            "ai_feedback": feedback["ai_analysis"]
-        }
+        "type": "analysis",
+        "score": feedback.get("score", 0),
+        "brief_feedback": feedback.get("brief_feedback", ""),
+        "improvement_tips": feedback.get("improvement_tips", ""),
+        "ai_feedback": feedback.get("ai_feedback", "")
+    }
     
     def final_report(self):
-        memory = get_memory_summary()
+        memory = get_memory_summary() or {"strengths": [], "weaknesses": []}
         return {
             "type": "final_report",
             "total_questions": self.question_count,
