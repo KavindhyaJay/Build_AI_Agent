@@ -23,9 +23,12 @@ def router_agent(query):
         return explanation
     
     # Default fallback
-    response = client.models.generate_content(query).text
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=query
+    ).text
     return response
 
 if __name__ == "__main__":
-    print(router_agent("What is the time now? - router_agent.py:30"))
-    print(router_agent("Explain recursion - router_agent.py:31"))
+    print(router_agent("What is the time now? - router_agent.py:33"))
+    print(router_agent("Explain recursion - router_agent.py:34"))
