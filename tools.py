@@ -19,7 +19,7 @@ def generate_score(keyword_score, difficulty = "medium"):
     
     return max(0, min(10, base))
 
-def improvemnt_tips(keywords, answer):
+def improvement_tips(keywords, answer):
     """
     returns which important keywords the user missed.
     """ 
