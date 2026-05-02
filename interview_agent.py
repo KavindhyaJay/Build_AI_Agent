@@ -126,7 +126,7 @@ client = genai.Client(api_key=API_KEY)
 MODEL =  "gemini-2.5-flash"  
 
 # Toggle this to False when you are ready to test the real AI
-MOCK_MODE = True
+MOCK_MODE = False
 
 #-------------------------------
 # GENERATE INTERVIEW QUESTIONS
