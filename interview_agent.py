@@ -113,7 +113,6 @@ import time
 import json
 from google import genai
 from dotenv import load_dotenv
-import random
 
 from memory_manager import save_interview_record, save_strength, save_weakness
 
@@ -164,7 +163,7 @@ def generate_questions(role):
             # If it's a 503 (Unavailable) or 429 (Too Many Requests), wait and retry
             if "503" in error_msg or "429" in error_msg:
                 wait_time = 2 ** attempt  # Waits 1s, then 2s, then 4s
-                print(f"\n[System] API busy. Retrying in {wait_time} seconds... - interview_agent.py:167")
+                print(f"\n[System] API busy. Retrying in {wait_time} seconds... - interview_agent.py:166")
                 time.sleep(wait_time)
             else:
                 # If it's a different error (like bad API key), fail immediately
